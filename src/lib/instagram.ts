@@ -391,14 +391,13 @@ async function fetchFromRapidApi(url: string): Promise<MediaResponse | null> {
   }
 
   try {
-    const response = await fetch('https://instagram-scraper-api2.p.rapidapi.com/v1/post_info', {
-      method: 'POST',
+    const targetUrl = `https://instagram-scraper-api2.p.rapidapi.com/v1/post_info?code_or_id_or_url=${encodeURIComponent(url)}`;
+    const response = await fetch(targetUrl, {
+      method: 'GET',
       headers: {
-        'Content-Type': 'application/json',
         'x-rapidapi-key': RAPIDAPI_KEY,
         'x-rapidapi-host': 'instagram-scraper-api2.p.rapidapi.com',
       },
-      body: JSON.stringify({ code_or_id_or_url: url }),
     });
 
     if (!response.ok) return null;
