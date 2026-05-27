@@ -3,6 +3,7 @@ import * as cheerio from 'cheerio';
 import { execFile } from 'child_process';
 import path from 'path';
 import util from 'util';
+import fs from 'fs';
 
 const execFileAsync = util.promisify(execFile);
 
@@ -467,8 +468,25 @@ async function fetchFromRapidApi(url: string): Promise<MediaResponse | null> {
 // ======================================================
 async function fetchFromYtDlp(url: string): Promise<MediaResponse | null> {
   try {
-    const ytDlpPath = path.join(process.cwd(), 'yt-dlp.exe');
-    console.log(`[Instagram] Running yt-dlp at: ${ytDlpPath} for URL: ${url}`);
+    const isWin = process.platform === 'win32';
+    const ytDlpBinary = isWin ? 'yt-dlp.exe' : 'yt-dlp';
+    const ytDlpPath = path.join(process.cwd(), ytDlpBinary);
+
+    console.log(`[Instagram] Running yt-dlp at: ${ytDlpPath} for URL: ${url} (OS: ${process.platform})`);
+
+    // On Linux/macOS, ensure the binary is executable
+    if (!isWin) {
+      try {
+        if (fs.existsSync(ytDlpPath)) {
+          fs.chmodSync(ytDlpPath, '755');
+        } else {
+          console.error(`[Instagram] Linux yt-dlp binary not found at: ${ytDlpPath}`);
+          return null;
+        }
+      } catch (chmodError) {
+        console.error('[Instagram] Failed to chmod yt-dlp binary:', chmodError);
+      }
+    }
 
     const { stdout } = await execFileAsync(
       ytDlpPath,
