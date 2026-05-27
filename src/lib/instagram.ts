@@ -509,7 +509,10 @@ async function fetchFromYtDlp(url: string): Promise<MediaResponse | null> {
         const entryUrl = entry.url;
         if (!entryUrl) continue;
 
-        const isVideo = entry.ext === 'mp4' || (entry.vcodec && entry.vcodec !== 'none');
+        const isVideo = 
+          entry.ext === 'mp4' || 
+          (entry.vcodec && entry.vcodec !== 'none') || 
+          (entry.url && (entry.url.includes('.mp4') || entry.url.includes('mime_type=video') || entry.url.includes('_v/') || entry.url.includes('/o1/')));
         media.push({
           url: entryUrl,
           type: isVideo ? 'video' : 'image',
@@ -522,7 +525,13 @@ async function fetchFromYtDlp(url: string): Promise<MediaResponse | null> {
       // Single post
       const directUrl = data.url;
       if (directUrl) {
-        const isVideo = data.ext === 'mp4' || (data.vcodec && data.vcodec !== 'none');
+        const isVideo = 
+          data.ext === 'mp4' || 
+          (data.vcodec && data.vcodec !== 'none') || 
+          url.includes('/reel/') || 
+          url.includes('/reels/') || 
+          url.includes('/tv/') ||
+          (data.url && (data.url.includes('.mp4') || data.url.includes('mime_type=video') || data.url.includes('_v/') || data.url.includes('/o1/')));
         media.push({
           url: directUrl,
           type: isVideo ? 'video' : 'image',
@@ -537,7 +546,13 @@ async function fetchFromYtDlp(url: string): Promise<MediaResponse | null> {
       // Fallback to formats
       const bestFormat = data.formats[data.formats.length - 1];
       if (bestFormat && bestFormat.url) {
-        const isVideo = data.ext === 'mp4' || (data.vcodec && data.vcodec !== 'none');
+        const isVideo = 
+          data.ext === 'mp4' || 
+          (data.vcodec && data.vcodec !== 'none') || 
+          url.includes('/reel/') || 
+          url.includes('/reels/') || 
+          url.includes('/tv/') ||
+          (bestFormat.url && (bestFormat.url.includes('.mp4') || bestFormat.url.includes('mime_type=video') || bestFormat.url.includes('_v/') || bestFormat.url.includes('/o1/')));
         media.push({
           url: bestFormat.url,
           type: isVideo ? 'video' : 'image',
