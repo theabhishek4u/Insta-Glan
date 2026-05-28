@@ -1,8 +1,10 @@
 import axios from 'axios';
 import type { MediaResponse } from '@/types';
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+
 const apiClient = axios.create({
-  baseURL: '',
+  baseURL: API_BASE_URL,
   timeout: 30000,
   headers: {
     'Content-Type': 'application/json',
@@ -38,7 +40,8 @@ export async function fetchInstagramMedia(url: string): Promise<MediaResponse> {
 }
 
 export function getProxyUrl(mediaUrl: string): string {
-  return `/api/proxy?url=${encodeURIComponent(mediaUrl)}`;
+  const baseUrl = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001').replace(/\/+$/, '');
+  return `${baseUrl}/api/proxy?url=${encodeURIComponent(mediaUrl)}`;
 }
 
 export async function downloadMedia(mediaUrl: string, filename: string): Promise<void> {
