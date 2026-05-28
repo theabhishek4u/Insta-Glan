@@ -1,17 +1,18 @@
-const { instagramDownload } = require("@mrnima/instagram-downloader");
+const cheerio = require("cheerio");
+const fs = require("fs");
 
-async function test() {
-  try {
-    console.log("Testing @mrnima/instagram-downloader...");
-    const res = await instagramDownload("https://www.instagram.com/reel/DY1xav5liPg");
-    console.log("Success:", JSON.stringify(res, null, 2));
-  } catch (err) {
-    console.error("Error:", err.message);
-  }
+try {
+  const html = fs.readFileSync("indown_result.html", "utf8");
+  const $ = cheerio.load(html);
+
+  console.log("=== Text content of #result ===");
+  console.log($('#result').text().trim());
+
+  console.log("\n=== Text content of .row ===");
+  $('.row').each((idx, el) => {
+    console.log(`Row ${idx}:`, $(el).text().trim().substring(0, 300));
+  });
+
+} catch (err) {
+  console.error("Error reading file:", err.message);
 }
-
-test();
-
-
-
-

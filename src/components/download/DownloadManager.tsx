@@ -1,8 +1,9 @@
 'use client';
+/* eslint-disable react-hooks/set-state-in-effect */
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { Download, Trash2, RotateCcw, Clock, X } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDownloadStore } from '@/store/downloadStore';
 import Badge from '@/components/ui/Badge';
 import Button from '@/components/ui/Button';
@@ -10,7 +11,13 @@ import Button from '@/components/ui/Button';
 export default function DownloadManager() {
   const { downloadHistory, clearHistory } = useDownloadStore();
   const [isOpen, setIsOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
   if (downloadHistory.length === 0) return null;
 
   return (

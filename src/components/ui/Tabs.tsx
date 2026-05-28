@@ -18,7 +18,7 @@ interface TabsProps {
 
 export default function Tabs({ tabs, activeTab, onTabChange, className = '' }: TabsProps) {
   return (
-    <div className={`flex flex-wrap justify-center gap-2 ${className}`}>
+    <div className={`flex flex-wrap justify-center gap-1.5 p-1.5 bg-surface-light-secondary/80 dark:bg-white/[0.02] border border-border-light dark:border-border-dark/60 rounded-2xl backdrop-blur-xl shadow-premium-glow/5 ${className}`}>
       {tabs.map((tab) => (
         <button
           key={tab.id}

@@ -30,6 +30,13 @@ const BROWSER_HEADERS: Record<string, string> = {
 };
 
 /**
+ * Check if a URL is an Instagram story URL
+ */
+function isStoryUrl(url: string): boolean {
+  return /\/stories\//i.test(url);
+}
+
+/**
  * Extract shortcode from an Instagram URL
  */
 function extractShortcode(url: string): string | null {
@@ -488,9 +495,21 @@ async function fetchFromYtDlp(url: string): Promise<MediaResponse | null> {
       }
     }
 
+    // Build yt-dlp arguments
+    const args = ['--dump-json'];
+
+    // If cookies.txt exists, pass it for authenticated content (stories, etc.)
+    const cookiesPath = path.join(process.cwd(), 'cookies.txt');
+    if (fs.existsSync(cookiesPath)) {
+      console.log('[Instagram] Found cookies.txt, using for authentication');
+      args.push('--cookies', cookiesPath);
+    }
+
+    args.push(url);
+
     const { stdout } = await execFileAsync(
       ytDlpPath,
-      ['--dump-json', url],
+      args,
       { timeout: 30000 }
     );
 
@@ -498,7 +517,7 @@ async function fetchFromYtDlp(url: string): Promise<MediaResponse | null> {
 
     const data = JSON.parse(stdout);
     const media: MediaItem[] = [];
-    let thumbnail = data.thumbnail || '';
+    const thumbnail = data.thumbnail || '';
     const username = data.uploader || data.uploader_id || 'unknown';
     const caption = data.description || data.title || '';
 
@@ -563,7 +582,14 @@ async function fetchFromYtDlp(url: string): Promise<MediaResponse | null> {
       timestamp: new Date().toISOString(),
     };
   } catch (error) {
-    console.error('[Strategy 4 - yt-dlp] Failed:', error);
+    const errMsg = error instanceof Error ? error.message : String(error);
+    console.error('[Strategy 4 - yt-dlp] Failed:', errMsg);
+
+    // If yt-dlp specifically says login is required, propagate that info
+    if (errMsg.includes('log in') || errMsg.includes('login')) {
+      console.error('[Instagram] yt-dlp reports login required for this content');
+    }
+
     return null;
   }
 }
@@ -574,12 +600,21 @@ async function fetchFromYtDlp(url: string): Promise<MediaResponse | null> {
 export async function fetchMediaFromUrl(url: string): Promise<MediaResponse> {
   console.log(`[Instagram] Fetching media for: ${url}`);
 
+  const isStory = isStoryUrl(url);
+
   // Strategy 0: yt-dlp extraction (most robust local method)
   console.log('[Instagram] Trying Strategy 0: yt-dlp extraction...');
   const ytDlpResult = await fetchFromYtDlp(url);
   if (ytDlpResult && ytDlpResult.media.length > 0) {
     console.log('[Instagram] Strategy 0 (yt-dlp) succeeded!');
     return ytDlpResult;
+  }
+
+  // Instagram Stories are strictly login-walled. Strategies 1, 2, and 3 will fail or return incorrect data
+  // (such as profile pictures from login redirect pages). If yt-dlp failed, we stop here for stories.
+  if (isStory) {
+    console.error('[Instagram] Story download failed. Stories require cookies.txt or authentication to download.');
+    throw new Error('STORY_LOGIN_REQUIRED');
   }
 
   // Strategy 1: Try embed page scraping (most reliable free method)

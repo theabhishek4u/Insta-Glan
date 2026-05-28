@@ -82,11 +82,12 @@ export default function FeaturesGrid() {
         >
           {features.map((feature) => (
             <motion.div key={feature.title} variants={itemVariants}>
-              <Card hover={true} className="p-7 h-full">
-                <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${feature.gradient} flex items-center justify-center text-white mb-5 shadow-glow-sm`}>
+              <Card hover={true} gradient={true} className="p-8 h-full relative overflow-hidden group">
+                <div className="absolute inset-0 bg-gradient-to-br from-white/[0.01] to-white/[0.05] dark:from-white/[0.005] dark:to-white/[0.02] pointer-events-none" />
+                <div className={`w-13 h-13 rounded-2xl bg-gradient-to-br ${feature.gradient} flex items-center justify-center text-white mb-6 shadow-premium-glow group-hover:scale-105 transition-transform duration-350`}>
                   {feature.icon}
                 </div>
-                <h3 className="text-lg font-bold mb-2 font-display">{feature.title}</h3>
+                <h3 className="text-lg font-bold mb-2.5 font-display transition-colors duration-300 group-hover:text-primary-500 dark:group-hover:text-primary-450">{feature.title}</h3>
                 <p className="text-sm text-text-light-secondary dark:text-text-dark-secondary leading-relaxed">
                   {feature.description}
                 </p>

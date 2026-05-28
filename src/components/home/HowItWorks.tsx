@@ -70,16 +70,16 @@ export default function HowItWorks() {
 
           {steps.map((step) => (
             <motion.div key={step.number} variants={itemVariants}>
-              <Card hover={true} className="p-8 text-center relative">
-                {/* Number */}
-                <div className="absolute top-4 right-4 text-5xl font-bold text-surface-light-tertiary dark:text-surface-dark-tertiary font-display">
+              <Card hover={true} gradient={true} className="p-8 text-center relative overflow-hidden group">
+                {/* Background Number Accent */}
+                <div className="absolute -top-3 -right-2 text-7xl sm:text-8xl md:text-[100px] font-black italic tracking-tighter text-text-light-primary/[0.04] dark:text-text-dark-primary/[0.02] select-none pointer-events-none transition-transform duration-500 group-hover:scale-110">
                   {step.number}
                 </div>
                 {/* Icon */}
-                <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${step.color} flex items-center justify-center text-white mx-auto mb-6 shadow-glow-sm`}>
+                <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${step.color} flex items-center justify-center text-white mx-auto mb-6 shadow-premium-glow group-hover:scale-105 transition-transform duration-350`}>
                   {step.icon}
                 </div>
-                <h3 className="text-xl font-bold mb-3 font-display">{step.title}</h3>
+                <h3 className="text-xl font-bold mb-3 font-display transition-colors duration-300 group-hover:text-primary-500 dark:group-hover:text-primary-450">{step.title}</h3>
                 <p className="text-sm text-text-light-secondary dark:text-text-dark-secondary leading-relaxed">
                   {step.description}
                 </p>

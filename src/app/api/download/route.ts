@@ -74,6 +74,7 @@ export async function POST(request: NextRequest) {
     const statusMap: Record<string, number> = {
       INVALID_URL: 400,
       PRIVATE_CONTENT: 403,
+      STORY_LOGIN_REQUIRED: 403,
       NOT_FOUND: 404,
       RATE_LIMITED: 429,
       API_FAILURE: 500,
@@ -82,6 +83,7 @@ export async function POST(request: NextRequest) {
     const messageMap: Record<string, string> = {
       INVALID_URL: 'Please enter a valid Instagram public URL.',
       PRIVATE_CONTENT: 'This content is from a private account and cannot be downloaded.',
+      STORY_LOGIN_REQUIRED: 'Instagram Stories require login to access. Stories cannot be downloaded without authentication. Please try downloading posts, reels, or photos instead.',
       NOT_FOUND: 'Could not extract media from this URL. The content may be private, deleted, or temporarily unavailable. Please try again.',
       RATE_LIMITED: 'Too many requests. Please wait and try again.',
       API_FAILURE: 'Something went wrong while fetching the content. Please try again later.',

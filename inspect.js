@@ -1,10 +1,19 @@
 const cheerio = require('cheerio');
 const fs = require('fs');
 
-const html = fs.readFileSync('embed.html', 'utf8');
+const html = fs.readFileSync('indown_story_result.html', 'utf8');
 const $ = cheerio.load(html);
 
-console.log('Title:', $('title').text());
-console.log('H1:', $('h1').text());
-console.log('H2:', $('h2').text());
-console.log('Text content (first 500 chars):', $('body').text().trim().substring(0, 500));
+// Print ALL script tags (even if not matching keywords)
+console.log('Total script tags:', $('script').length);
+$('script').each(function(idx) {
+  const src = $(this).attr('src');
+  const text = $(this).html() || '';
+  if (src) {
+    console.log(`Script ${idx}: external src="${src}"`);
+  } else if (text.length > 50) {
+    console.log(`Script ${idx}: inline (${text.length} chars) - first 500:`);
+    console.log(text.substring(0, 500));
+    console.log('---');
+  }
+});

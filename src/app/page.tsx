@@ -3,7 +3,6 @@ import PreviewCard from '@/components/home/PreviewCard';
 import HowItWorks from '@/components/home/HowItWorks';
 import FeaturesGrid from '@/components/home/FeaturesGrid';
 import FAQSection from '@/components/home/FAQSection';
-import DownloadManager from '@/components/download/DownloadManager';
 import AdSlot from '@/components/layout/AdSlot';
 import { generateWebApplicationSchema, generateOrganizationSchema } from '@/lib/seo';
 
@@ -25,8 +24,6 @@ export default function HomePage() {
           </p>
         </div>
       </section>
-
-      <DownloadManager />
 
       {/* Structured Data */}
       <script

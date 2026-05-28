@@ -84,32 +84,32 @@ export default function HeroSection() {
   }, [handleSubmit]);
 
   return (
-    <section className="relative min-h-[70vh] flex flex-col items-center justify-center px-4 pt-32 pb-16 overflow-hidden">
+    <section className="relative min-h-[70vh] flex flex-col items-center justify-center px-4 pt-32 pb-16 overflow-hidden bg-grid-pattern">
       {/* Animated gradient orbs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
           animate={{
-            x: [0, 30, -20, 0],
-            y: [0, -40, 20, 0],
+            x: [0, 40, -30, 0],
+            y: [0, -50, 30, 0],
           }}
           transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-primary-500/10 dark:bg-primary-500/5 blur-3xl"
+          className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full bg-primary-500/15 dark:bg-primary-500/10 blur-[100px]"
         />
         <motion.div
           animate={{
-            x: [0, -30, 20, 0],
-            y: [0, 30, -40, 0],
+            x: [0, -40, 30, 0],
+            y: [0, 40, -50, 0],
           }}
           transition={{ duration: 25, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute top-1/3 right-1/4 w-80 h-80 rounded-full bg-pink-500/10 dark:bg-pink-500/5 blur-3xl"
+          className="absolute top-1/3 right-1/4 w-[400px] h-[400px] rounded-full bg-pink-500/15 dark:bg-pink-500/10 blur-[90px]"
         />
         <motion.div
           animate={{
-            x: [0, 20, -30, 0],
-            y: [0, -20, 30, 0],
+            x: [0, 30, -40, 0],
+            y: [0, -30, 40, 0],
           }}
           transition={{ duration: 30, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute bottom-1/4 right-1/3 w-72 h-72 rounded-full bg-blue-500/10 dark:bg-blue-500/5 blur-3xl"
+          className="absolute bottom-1/4 right-1/3 w-[350px] h-[350px] rounded-full bg-blue-500/15 dark:bg-blue-500/10 blur-[80px]"
         />
       </div>
 
@@ -120,7 +120,7 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold font-display leading-tight mb-8 sm:whitespace-nowrap"
+          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold font-display tracking-tight leading-tight mb-8"
         >
           <span className="gradient-text">Videos, Reels, Photos &amp; Stories</span>
         </motion.h1>

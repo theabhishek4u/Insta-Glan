@@ -192,3 +192,50 @@ body {
   background-size: 200% 100%;
   animation: shimmer 2s linear infinite;
 }
+
+/* === Grid Background === */
+.bg-grid-pattern {
+  background-image: 
+    linear-gradient(rgba(139, 92, 246, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(139, 92, 246, 0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.dark .bg-grid-pattern {
+  background-image: 
+    linear-gradient(rgba(139, 92, 246, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(139, 92, 246, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* === Floating Glowing Effects === */
+.shadow-premium-glow {
+  box-shadow: 0 0 40px -10px rgba(139, 92, 246, 0.35);
+}
+
+.shadow-premium-glow-pink {
+  box-shadow: 0 0 40px -10px rgba(236, 72, 153, 0.35);
+}
+
+/* === Sliding hover underline helper === */
+.hover-underline-expand {
+  position: relative;
+}
+
+.hover-underline-expand::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: -4px;
+  left: 0;
+  background: linear-gradient(90deg, #8b5cf6, #ec4899);
+  transform-origin: bottom right;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-underline-expand:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}

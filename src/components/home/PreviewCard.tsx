@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Download, ExternalLink, ChevronDown, ChevronUp } from 'lucide-react';
+import { Download, ChevronDown, ChevronUp } from 'lucide-react';
 import { useState } from 'react';
 import Button from '@/components/ui/Button';
 import Badge from '@/components/ui/Badge';
@@ -116,25 +116,15 @@ export default function PreviewCard() {
         {/* Download Buttons */}
         <div className="p-5 space-y-3">
           {mediaData.media.length === 1 ? (
-            <div className="flex gap-3">
-              <Button
-                onClick={() => handleDownload(mediaData.media[0].url, 0)}
-                loading={downloading === `0-${mediaData.media[0].url}`}
-                icon={<Download className="w-4 h-4" />}
-                className="flex-1"
-                id="download-hd-button"
-              >
-                HD Download
-              </Button>
-              <Button
-                variant="outline"
-                onClick={() => window.open(mediaData.media[0].url, '_blank')}
-                icon={<ExternalLink className="w-4 h-4" />}
-                id="open-original-button"
-              >
-                Open
-              </Button>
-            </div>
+            <Button
+              onClick={() => handleDownload(mediaData.media[0].url, 0)}
+              loading={downloading === `0-${mediaData.media[0].url}`}
+              icon={<Download className="w-4 h-4" />}
+              className="w-full"
+              id="download-hd-button"
+            >
+              HD Download
+            </Button>
           ) : (
             <>
               <Button

@@ -4,6 +4,7 @@ import { inter, outfit } from '@/lib/fonts';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import Script from 'next/script';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -60,7 +61,9 @@ export default function RootLayout({
     <html lang="en" className="dark" suppressHydrationWarning>
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
-        <script
+        <Script
+          id="theme-initializer"
+          strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
             __html: `
               try {
