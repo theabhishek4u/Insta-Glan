@@ -44,6 +44,11 @@ export function getProxyUrl(mediaUrl: string): string {
   return `${baseUrl}/api/proxy?url=${encodeURIComponent(mediaUrl)}`;
 }
 
+export function getPreviewUrl(mediaUrl: string): string {
+  const baseUrl = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001').replace(/\/+$/, '');
+  return `${baseUrl}/api/proxy?preview=1&url=${encodeURIComponent(mediaUrl)}`;
+}
+
 export async function downloadMedia(mediaUrl: string, filename: string): Promise<void> {
   const proxyUrl = getProxyUrl(mediaUrl);
   const link = document.createElement('a');
