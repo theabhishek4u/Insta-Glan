@@ -49,7 +49,7 @@ export default function PreviewCard() {
         initial={{ opacity: 0, scale: 0.95, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ duration: 0.5, ease: 'easeOut' }}
-        className="max-w-xl mx-auto rounded-2xl overflow-hidden bg-white/70 dark:bg-white/[0.03] border border-border-light dark:border-border-dark backdrop-blur-xl shadow-card"
+        className="max-w-xl mx-auto rounded-2xl overflow-hidden bg-white/70 dark:bg-white/3 border border-border-light dark:border-border-dark backdrop-blur-xl shadow-card"
       >
         {/* Header */}
         <div className="flex items-center gap-3 p-5 border-b border-border-light dark:border-border-dark">
