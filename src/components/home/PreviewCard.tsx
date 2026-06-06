@@ -7,7 +7,7 @@ import Button from '@/components/ui/Button';
 import Badge from '@/components/ui/Badge';
 import { PreviewSkeleton } from '@/components/ui/Skeleton';
 import { useDownloadStore } from '@/store/downloadStore';
-import { downloadMedia, getProxyUrl } from '@/lib/api';
+import { downloadMedia, getProxyUrl, getPreviewUrl } from '@/lib/api';
 import toast from 'react-hot-toast';
 
 export default function PreviewCard() {
@@ -71,9 +71,10 @@ export default function PreviewCard() {
         <div className="relative bg-black/5 dark:bg-black/20">
           {mediaData.media[0]?.type === 'video' ? (
             <video
-              src={getProxyUrl(mediaData.media[0].url)}
+              src={getPreviewUrl(mediaData.media[0].url)}
               poster={mediaData.thumbnail ? getProxyUrl(mediaData.thumbnail) : undefined}
               controls
+              playsInline
               className="w-full max-h-96 object-contain"
               preload="metadata"
             />
